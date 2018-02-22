@@ -2,15 +2,15 @@
 public class Project_1 {
 
 	public static void main(String[] args) {
-		int[] a= {9,8,7,6,4,2,1,89,78,62,54,45,552,5};
+		int[] test= {9,8,7,6,4,2,1,89,78,62,54,45,552,5};
 		int i=0;
-		int index=a.length;
+		int index=test.length;
 		while(true) {
-			if(a[i]>a[i+1]) {
+			if(test[i]>test[i+1]) {
 				int tem;
-				tem=a[i];
-				a[i]=a[i+1];
-				a[i+1]=tem;
+				tem=test[i];
+				test[i]=test[i+1];
+				test[i+1]=tem;
 				
 				i=0;
 			}else {
@@ -19,6 +19,9 @@ public class Project_1 {
 					break;
 				}
 			}
+		}
+		for(int b:test){
+			System.out.println(b);
 		}
 	}
 }
