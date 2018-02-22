@@ -8,14 +8,20 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
-public class ReadZip {
+/**
+*	Created by Penghao,日期未知
+*	该程序从zip压缩包中列出所有文件,由于使用Java自带的库，
+*所以效率不高
+*/
+
+public class ListAllFileFromZip {
 
 	public static void main(String[] args) {
-		new ReadZip().main();
+		new ListAllFileFromZip().main();
 	}
 
 	public void main() {
-		String path="eclipse.zip";
+		String path="eclipse.zip";//测试zip文件的路径
 		readZip(path);
 	}
 	
