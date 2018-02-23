@@ -13,8 +13,8 @@ public class Huffman {
 
     public void main() {
         //过程处理
-        File file=new File("/storage/emulated/0/12-第一行代码 Android 第2版.pdf");
-        byte[] readed=new byte[1024*1024];
+        File file=new File("/home/penghao/文档/12-第一行代码 Android 第2版.pdf");
+        byte[] readed=new byte[1];
         long[] count=new long[256];
         if (!file.exists()) {
             System.err.println("文件不存在！");
