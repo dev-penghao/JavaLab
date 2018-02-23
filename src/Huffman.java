@@ -8,12 +8,12 @@ public class Huffman {
         long a=System.currentTimeMillis();
         new Huffman().main();
         long b=System.currentTimeMillis();
-        System.out.println(b-a);
+        System.out.println("程序运行结束，用时"+(b-a)+"s");
     }
 
     public void main() {
         //过程处理
-        File file=new File("/storage/emulated/0/QQBrowser.zip");
+        File file=new File("/storage/emulated/0/12-第一行代码 Android 第2版.pdf");
         byte[] readed=new byte[1024*1024];
         long[] count=new long[256];
         if (!file.exists()) {
@@ -33,16 +33,19 @@ public class Huffman {
         }
         //显示结果
         long total=file.length();
-        double probability;
-        double sum=0;
+        Fraction probability;
+        Fraction sum=Fraction.ZERO;
+		long suml=0;
         for(int i=0;i<count.length;i++) {
-            probability=((double)count[i])/total;
-            sum=sum+probability;
-            System.out.println(i);
-            System.out.println(count[i]+" 的概率是"+probability);
+			suml=suml+count[i];
+            probability=new Fraction(count[i],total);
+            sum=sum.plus(probability);
+            System.out.printf("%x\n",i);
+            System.out.println(count[i]+" 的概率是"+probability.toString());
             System.out.println("-------------------------------------------------------------------------");
         }
-        System.out.println("和是"+sum);
+		System.out.println(suml);
+        System.out.println("和是"+sum.toString());
         System.out.println("最小值是："+Min(count));
         System.out.println("最大值是："+Max(count));
 
@@ -113,6 +116,7 @@ class Fraction{
 	
 	//分数加法
 	public Fraction plus(Fraction fraction){
+		
 		long numerator=fraction.getNumerator();
 		long denominator=fraction.getDenominator();
 		long temNum,temDen;
@@ -122,7 +126,6 @@ class Fraction{
 		denominator=denominator*this.denominator;
 		long newNum=numerator+temNum;
 		long newDen=denominator;
-		System.out.println(newNum+"/"+newDen);
 		long gcd=getGcd(newNum,newDen);
 		newNum=newNum/gcd;
 		newDen=newDen/gcd;
@@ -171,5 +174,10 @@ class Fraction{
 	
 	private long getLcm(long a,long b){
 		return (a*b)/getGcd(a,b);
+	}
+
+	@Override
+	public String toString(){
+		return numerator+"/"+denominator;
 	}
 }
