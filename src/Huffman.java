@@ -75,13 +75,19 @@ class Fraction{
 	public static final Fraction ONE=new Fraction(1,1);
 	public static final Fraction ZERO=new Fraction(0,1);
 
-    public Fraction(int numerator,int denominator){
+    public Fraction(int numerator,int denominator) throws ArithmeticException{
         this.numerator=numerator;
+		if(denominator==0){
+			throw new ArithmeticException("The denominator is ZERO!");
+		}
         this.denominator=denominator;
     }
 
-    public Fraction(long numerator,long denominator){
+    public Fraction(long numerator,long denominator) throws ArithmeticException{
         this.numerator=numerator;
+		if(denominator==0){
+			throw new ArithmeticException("The denominator is ZERO!");
+		}
         this.denominator=denominator;
     }
 
@@ -105,6 +111,7 @@ class Fraction{
 		return denominator;
 	}
 	
+	//分数加法
 	public Fraction plus(Fraction fraction){
 		long numerator=fraction.getNumerator();
 		long denominator=fraction.getDenominator();
@@ -122,11 +129,31 @@ class Fraction{
 		return new Fraction(newNum,newDen);
 	}
 	
+	//分数乘法
 	public Fraction multiply(Fraction fraction){
 		long newNum=numerator*fraction.getNumerator();
 		long newDen=denominator*fraction.getDenominator();
-		
+		long gcd=getGcd(newNum,newDen);
+		newNum=newNum/gcd;
+		newDen=newDen/gcd;
 		return new Fraction(newNum,newDen);
+	}
+	
+	//求倒数运算
+	public Fraction reciprocal(Fraction fraction){
+		long newNum=fraction.getNumerator();
+		long newDen=fraction.getDenominator();
+		long tem=newNum;
+		newNum=newDen;
+		newDen=tem;
+		return new Fraction(newNum,newDen);
+	}
+	
+	//比较两分数的大小，a>b返回1，a=b返回0，a<b返回-1
+	public short cmp(Fraction a,Fraction b){
+		long aNum=a.getNumerator(),aDen=a.getDenominator(),
+			bNun=b.getNumerator(),bDen=b.getDenominator();
+		return 0;
 	}
 	
 	//辗转相除法求两正数的最大公约数
