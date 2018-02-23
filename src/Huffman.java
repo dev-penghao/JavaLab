@@ -8,46 +8,58 @@ public class Huffman {
         long a=System.currentTimeMillis();
         new Huffman().main();
         long b=System.currentTimeMillis();
-        System.out.println("程序运行结束，用时"+(b-a)+"s");
+        System.out.println("程序运行结束，用时"+(b-a)+"ms");
     }
 
     public void main() {
         //过程处理
-        File file=new File("/home/penghao/文档/12-第一行代码 Android 第2版.pdf");
-        byte[] readed=new byte[1];
-        long[] count=new long[256];
-        if (!file.exists()) {
-            System.err.println("文件不存在！");
-            return;
-        }
-        try {
+        File file=new File("/home/penghao/下载/android-x86_64-7.1-r1(1).iso");
+		if (!file.exists()) {
+			System.err.println("文件不存在！");
+			return;
+		}
+        int buffSize=1024*1024;
+        byte[] readed=new byte[buffSize];
+        long[] counts=new long[256];
+		long file_length=file.length();
+		try {
             FileInputStream fis=new FileInputStream(file);
-            while(fis.read(readed)!=-1) {
-                for(int i=0;i<readed.length;i++) {
-                    count[readed[i]&0x0ff]++;
-                }
-            }
+//			while(fis.read(readed)!=-1) {
+//				for(int i=0;i<readed.length;i++) {
+//					counts[readed[i]&0x0ff]++;
+//				}
+//			}
+			//使用以下代码代替上段代码，因为最后一次读取到的数据未必能将缓冲区填满，所以最后一次读取必需做特殊处理
+            long count=file_length/buffSize;//读取文件时要循环的次数
+			for (int i0=0;i0<count;i0++){
+				fis.read(readed);
+				for(int i1=0;i1<readed.length;i1++) {
+					counts[readed[i1]&0x0ff]++;
+				}
+			}
+			//最后一次读取文件要做特殊处理
+			fis.read(readed);
+			for (int i=0;i<file_length-count*buffSize;i++){
+				counts[readed[i]&0x0ff]++;
+			}
             fis.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
         //显示结果
-        long total=file.length();
         Fraction probability;
         Fraction sum=Fraction.ZERO;
 		long suml=0;
-        for(int i=0;i<count.length;i++) {
-			suml=suml+count[i];
-            probability=new Fraction(count[i],total);
+        for(int i=0;i<counts.length;i++) {
+			suml=suml+counts[i];
+            probability=new Fraction(counts[i],file_length);
             sum=sum.plus(probability);
-            System.out.printf("%x\n",i);
-            System.out.println(count[i]+" 的概率是"+probability.toString());
-            System.out.println("-------------------------------------------------------------------------");
+            System.out.printf("%x 在文件中出现了：%d次，出现的概率是："+probability.toString()+"\n",i,counts[i]);
         }
 		System.out.println(suml);
         System.out.println("和是"+sum.toString());
-        System.out.println("最小值是："+Min(count));
-        System.out.println("最大值是："+Max(count));
+        System.out.println("最小值是："+Min(counts));
+        System.out.println("最大值是："+Max(counts));
 
     }
 
@@ -116,7 +128,6 @@ class Fraction{
 	
 	//分数加法
 	public Fraction plus(Fraction fraction){
-		
 		long numerator=fraction.getNumerator();
 		long denominator=fraction.getDenominator();
 		long temNum,temDen;
