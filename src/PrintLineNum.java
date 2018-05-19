@@ -13,7 +13,10 @@ public class PrintLineNum {
 	}
 	
 	public void main(){
-		File input=new File("/storage/emulated/0/AppProjects");		
+		File input=new File("/home/penghao/WorkSpace/minix/src/minix");
+		if(!input.exists()) {
+			System.out.println("文件："+input.getName()+"不存在！");
+		}
 		printFile(input);
 		//getLineNum(input);
 		System.out.println("Donw!  "+line_num);
