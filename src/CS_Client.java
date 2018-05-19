@@ -7,6 +7,11 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+/*
+ *客户端类，客户端主要由两个模块组成，
+ *一个不断从服务器读取新消息并显示，
+ *一个循环读取键盘输入并发送到服务器
+ */
 public class CS_Client {
 
 	static Socket sk;
@@ -26,6 +31,11 @@ public class CS_Client {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		/*
+		 *开启一个线程循环从读取缓冲区，如果有新消息则显示，
+		 *没有的话进入下一次循环
+		 */
 		new Thread(new Runnable(){
 			@Override
 			public void run()
@@ -44,6 +54,7 @@ public class CS_Client {
 		Scanner scanner=new Scanner(System.in);
 		String input;
 		
+		//获取键盘输入并向服务器发送
 		while(!(input=scanner.nextLine()).equals("exit")) {
 			ps.println(input);
 		}
