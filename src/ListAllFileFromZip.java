@@ -21,7 +21,7 @@ public class ListAllFileFromZip {
 	}
 
 	public void main() {
-		String path="eclipse.zip";//测试zip文件的路径
+		String path="eclipse.zip";//用于测试的zip文件的路径
 		readZip(path);
 	}
 	

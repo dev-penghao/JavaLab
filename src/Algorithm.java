@@ -1,6 +1,6 @@
 /**
 *	Created by Penghao on 2018-2-22.
-*	该文件中包含许多算法的实现，这些算法都是Penghao在codeing中遇到的问题,
+*	该文件中包含许多算法的实现，这些算法都是Penghao在learn codeing中遇到的问题,
 *为了以后复用并作为纪念而汇总于此
 */
 public class Algorithm {
@@ -10,7 +10,8 @@ public class Algorithm {
 	}
 	
 	public void main(){
-		
+		int[] test={5,98,45,3,6,5,98,123,3};//要被排序的数
+		sort(test);
 	}
 	
 	//冒泡法对数组从小到大排序

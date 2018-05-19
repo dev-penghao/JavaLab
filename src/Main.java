@@ -1,15 +1,19 @@
-public class Main {
+
+import java.util.*;public class Main
+ {
 	
 	public static void main(String[] args){
 		new Main().main();
 	}
 
 	private void main(){
-		Fraction f1=new Fraction(-1,9);
-		Fraction f2=new Fraction(2,8);
-		f1=f1.reciprocal(Fraction.ZERO);
-		System.out.println(f1.getNumerator()+"   "+f1.getDenominator());
+		long l=0;
+		long a=System.currentTimeMillis();
+		while(l<100000000){
+			boolean b = false;
+		}
+		long b=System.currentTimeMillis();
+		System.out.println("耗时"+(b-a));
 		
-		//System.out.println("a="+a+"  b="+b);
 	}
 }
