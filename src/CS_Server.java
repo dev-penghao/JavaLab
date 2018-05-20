@@ -42,6 +42,8 @@ class TestThrad extends Thread{
 	
 	Socket socket;
 	BufferedReader br;
+	PrintStream pStream;
+	
 	public TestThrad(Socket socket) {
 		this.socket=socket;
 	}
@@ -52,17 +54,52 @@ class TestThrad extends Thread{
 	@Override
 	public void run() {
 		try {
-			String string;
+			String string="";
+			char[] ch=new char[1];
 			br=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			pStream=new PrintStream(socket.getOutputStream());
 			while(true) {
-				if (!(string=br.readLine()).equals("")) {
-					System.out.println(socket.getInetAddress()+":"+string);
-					CS_Server.sendMessage(string);
+				while(true) {
+					br.read(ch);
+					if (ch[0]==0) {
+						break;
+					}
+					string+=ch[0];
 				}
+				analyseCmd(string);
+				string="";
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		super.run();
+	}
+	
+	public void analyseCmd(String cmd) {
+		String[] ss=cmd.split("/");
+		if (ss[0].equals("message")) {
+			CS_Server.sendMessage(ss[1]);
+		}else if (ss[0].equals("test")) {
+			pStream.println("OK");
+		}else if (ss[0].equals("sign_in")) {
+			sign_in(ss[1], ss[2]);
+		}else if (ss[0].equals("sign_up")) {
+			sign_up(ss[1], ss[2], ss[3]);
+		}else {
+			System.err.println("Bad cmd!");
+		}
+		for(String s:ss) {
+			System.out.println(s);
+		}
+	}
+	
+	public boolean sign_up(String name,String num,String password) {
+		
+		return false;
+	}
+	
+	public boolean sign_in(String num,String password) {
+		
+		return false;
 	}
 }

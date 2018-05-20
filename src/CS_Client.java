@@ -56,7 +56,8 @@ public class CS_Client {
 		
 		//获取键盘输入并向服务器发送
 		while(!(input=scanner.nextLine()).equals("exit")) {
-			ps.println(input);
+			ps.print("message/"+input);
+			ps.write(0);
 		}
 	}
 }

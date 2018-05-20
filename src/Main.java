@@ -1,19 +1,20 @@
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-import java.util.*;public class Main
- {
+public class Main {
 	
 	public static void main(String[] args){
 		new Main().main();
 	}
 
 	private void main(){
-		long l=0;
-		long a=System.currentTimeMillis();
-		while(l<100000000){
-			boolean b = false;
+		try {
+			InetAddress ip=InetAddress.getLocalHost();
+			System.out.println(ip.getHostName());
+			System.out.println(ip.getHostAddress());
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		long b=System.currentTimeMillis();
-		System.out.println("耗时"+(b-a));
-		
 	}
 }
