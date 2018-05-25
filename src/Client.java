@@ -12,7 +12,7 @@ import java.util.Scanner;
  *一个不断从服务器读取新消息并显示，
  *一个循环读取键盘输入并发送到服务器
  */
-public class CS_Client {
+public class Client {
 
 	static Socket sk;
 	static PrintStream ps;
@@ -32,6 +32,32 @@ public class CS_Client {
 			e1.printStackTrace();
 		}
 		
+		
+		Scanner scanner=new Scanner(System.in);
+		String input;
+		System.out.print("'0'登录，'1'注册：");
+		if ((input=scanner.nextLine()).equals("0")) {
+			Requset requset=new Requset();
+			requset.setType("sign_in");
+			System.out.print("账号：");
+			String num=scanner.nextLine();
+			System.out.print("密码：");
+			String password=scanner.nextLine();
+			ps.print("sign_in/"+num+"/"+password);
+			ps.write(0);			
+		}else if (input.equals("1")) {
+			System.out.print("用户名：");
+			String name=scanner.nextLine();
+			System.out.print("账号：");
+			String num=scanner.nextLine();
+			System.out.print("密码：");
+			String password=scanner.nextLine();
+			ps.print("sign_up/"+name+"/"+num+"/"+password);
+			ps.write(0);			
+		}else {
+			System.err.println("你应该输入0或1");
+			return;
+		}
 		/*
 		 *开启一个线程循环从读取缓冲区，如果有新消息则显示，
 		 *没有的话进入下一次循环
@@ -51,13 +77,28 @@ public class CS_Client {
 			}
 		}).start();
 		
-		Scanner scanner=new Scanner(System.in);
-		String input;
-		
 		//获取键盘输入并向服务器发送
 		while(!(input=scanner.nextLine()).equals("exit")) {
 			ps.print("message/"+input);
 			ps.write(0);
 		}
+	}
+}
+
+class Requset{
+	
+	String request="";
+	
+	public void setType(String type) {
+		request=type+"/";
+	}
+	
+	public void add(String item) {
+		request+=item+"/";
+	}
+	
+	@Override
+	public String toString() {
+		return request;
 	}
 }
